@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Steps</string>
+    <string name="user_name">UserName</string>
+    <string name="password">Password</string>
+    <string name="enter">Enter</string>
+    <string name="login_fb">Login With FaceBook</string>
+    <string name="forgot">Forgot Password?</string>
+    <string name="remember">Remember Me</string>
+    <string name="sign_up">Sign Up With Email</string>
+
+
+
+</resources>
