@@ -5,11 +5,13 @@ package com.example.hagar.steps.view;
  */
 
 public interface LoginView {
+
     void loginValidations();
 
     void loginSuccess();
 
     void loginError();
 
-    boolean validEmail(String email);
+    boolean validEmmail(String email);
+    public boolean checkConnection();
 }

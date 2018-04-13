@@ -6,5 +6,5 @@ package com.example.hagar.steps.presenter;
 
 public interface LoginPresenter {
 
-    void ProsessLogin(String userName ,String password);
+    void validatation(String userName ,String password);
 }

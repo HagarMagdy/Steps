@@ -3,41 +3,40 @@ package com.example.hagar.steps.model;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.hagar.steps.presenter.LoginPresenter;
 import com.example.hagar.steps.services.Api;
-import com.example.hagar.steps.view.LoginView;
-import com.squareup.otto.Produce;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.ContentValues.TAG;
+
 /**
- * Created by Hagar on 08/04/2018.
+ * Created by Hagar on 13/04/2018.
  */
 
-public class PresenterImpl implements LoginPresenter {
-    private static final String TAG = "PresenterImpl" ;
-    private static final String SERVER_URL = "https://private-d3105-tamini.apiary-mock.com/Tamini/" ;
-    LoginView loginView;
+public class modelImpl implements modelInterface {
 
-    public PresenterImpl(LoginView mLoginView) {
-        this.loginView = mLoginView;
-    }
+
+    private static final String TAG = "PresenterImpl";
+    private static final String SERVER_URL = "https://private-d3105-tamini.apiary-mock.com/Tamini/";
 
     @Override
-    public void ProsessLogin(String email, String password) {
+    public void ProsessLogin(String email, String password, final OnLoginFinishedListener listener) {
 
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            loginView.loginValidations();
+            Log.i("KEY","model/impl empty field");
+
+            listener.showLoginErr();
         } else {
-            if (loginView.validEmail(email) == false) {
-                loginView.loginValidations();
-            } else {
+            if (listener.validEmmailInsidePres(email) == true) {
+                listener.errValidateEmail();
+                Log.i("KEY","model/impl validation");
+            }
+
+            else {
                 Retrofit retrofit = new Retrofit.Builder()
                         .addConverterFactory(GsonConverterFactory.create())
                         .baseUrl(SERVER_URL)
@@ -48,23 +47,23 @@ public class PresenterImpl implements LoginPresenter {
                 call.enqueue(new Callback<ResponsePojo>() {
                     @Override
                     public void onResponse(Call<ResponsePojo> call, Response<ResponsePojo> response) {
-                        loginView.loginSuccess();
-                        Log.e(TAG, "Success ");
+                        listener.onSuccess();
+                        Log.i("KEY","inside onResponse");
                     }
-
                     @Override
                     public void onFailure(Call<ResponsePojo> call, Throwable t) {
-                        Log.e(TAG, "Failed");
-                        loginView.loginError();
+                        listener.showLoginErr();
+
+                        Log.i("KEY","inside onFailure");
+
                     }
                 });
 
             }
 
+
         }
 
-
     }
-
-
 }
+

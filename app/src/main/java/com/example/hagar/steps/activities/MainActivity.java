@@ -1,5 +1,7 @@
 package com.example.hagar.steps.activities;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.hagar.steps.R;
-import com.example.hagar.steps.model.PresenterImpl;
+import com.example.hagar.steps.model.modelImpl;
+import com.example.hagar.steps.presenter.PresenterImpl;
 import com.example.hagar.steps.presenter.LoginPresenter;
 import com.example.hagar.steps.view.LoginView;
 
@@ -35,38 +38,64 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        loginPres = new PresenterImpl(MainActivity.this);
+        loginPres = new PresenterImpl(MainActivity.this, new modelImpl());
     }
 
     @OnClick(R.id.login_btn)
     public void login(View view) {
+        Log.i("key", "first step");
         String userName = uName.getText().toString();
         String password = pass.getText().toString();
-        loginPres.ProsessLogin(userName, password);
+
+        if (checkConnection()==true)
+            loginPres.validatation(userName, password);
+        else
+            Toast.makeText(getApplicationContext(), "Open  MobileWIFI Or Data", Toast.LENGTH_SHORT).show();
+
     }
+
 
     @Override
     public void loginValidations() {
+        Log.i("KEY", "inside main/loginvalidations");
+
         Toast.makeText(getApplicationContext(), "invalid email or password", Toast.LENGTH_SHORT).show();
         Log.i("TAG", "Enter Data !");
     }
 
     @Override
     public void loginSuccess() {
+        Log.i("KEY", "inside main/loginsuccess");
+
         Toast.makeText(getApplicationContext(), "Success Login", Toast.LENGTH_SHORT).show();
         Log.i("TAG", "Success");
     }
 
     @Override
     public void loginError() {
-        Toast.makeText(getApplicationContext(), "Fail Login , Check your Network", Toast.LENGTH_SHORT).show();
+        Log.i("KEY", "inside main/loginerr");
+        Toast.makeText(getApplicationContext(), "Fail Login", Toast.LENGTH_SHORT).show();
         Log.i("TAG", "Fail");
     }
 
     @Override
-    public boolean validEmail(String email) {
+    public boolean validEmmail(String email) {
+        Log.i("KEY", "inside main/validemail");
+
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
+    }
+
+    @Override
+    public boolean checkConnection() {
+        boolean connected = false;
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE));
+        if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected()) {
+            connected = true;
+        } else {
+            connected = false;
+        }
+        return connected;
     }
 
 
