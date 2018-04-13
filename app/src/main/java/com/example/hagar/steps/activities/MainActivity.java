@@ -88,11 +88,16 @@ public class MainActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public boolean checkConnection() {
+        Log.i("KEY","CONNECTION");
         boolean connected = false;
         final ConnectivityManager connectivityManager = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE));
         if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected()) {
             connected = true;
+            Log.i("KEY","internet connected");
+
         } else {
+            Log.i("KEY","internet not connected");
+
             connected = false;
         }
         return connected;
