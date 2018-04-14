@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.hagar.steps.presenter.PresenterImpl;
 import com.example.hagar.steps.presenter.LoginPresenter;
 import com.example.hagar.steps.view.LoginView;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         String userName = uName.getText().toString();
         String password = pass.getText().toString();
 
-        if (checkConnection()==true)
+        if (checkConnection() == true)
             loginPres.validatation(userName, password);
         else
             Toast.makeText(getApplicationContext(), "Open  MobileWIFI Or Data", Toast.LENGTH_SHORT).show();
@@ -55,13 +57,6 @@ public class MainActivity extends AppCompatActivity implements LoginView {
     }
 
 
-    @Override
-    public void loginValidations() {
-        Log.i("KEY", "inside main/loginvalidations");
-
-        Toast.makeText(getApplicationContext(), "invalid email or password", Toast.LENGTH_SHORT).show();
-        Log.i("TAG", "Enter Data !");
-    }
 
     @Override
     public void loginSuccess() {
@@ -79,24 +74,34 @@ public class MainActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
-    public boolean validEmmail(String email) {
-        Log.i("KEY", "inside main/validemail");
+    public  boolean validEmmail(String email) {
 
-        Pattern pattern = Patterns.EMAIL_ADDRESS;
-        return pattern.matcher(email).matches();
+        boolean isValid = false;
+
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+
+        Log.i("V",""+isValid);
+        return isValid;
     }
 
     @Override
     public boolean checkConnection() {
-        Log.i("KEY","CONNECTION");
+        Log.i("KEY", "CONNECTION");
         boolean connected = false;
         final ConnectivityManager connectivityManager = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE));
         if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected()) {
             connected = true;
-            Log.i("KEY","internet connected");
+            Log.i("KEY", "internet connected");
 
         } else {
-            Log.i("KEY","internet not connected");
+            Log.i("KEY", "internet not connected");
 
             connected = false;
         }

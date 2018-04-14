@@ -63,7 +63,7 @@ public class PresenterImpl implements LoginPresenter, modelInterface.OnLoginFini
     {
         Log.i("KEY","PRES / validEmmailInsidePres");
         view.validEmmail(email);
-        return false;
+        return view.validEmmail(email);
     }
 
 

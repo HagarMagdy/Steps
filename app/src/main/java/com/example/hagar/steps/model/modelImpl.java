@@ -31,7 +31,7 @@ public class modelImpl implements modelInterface {
 
             listener.showLoginErr();
         } else {
-            if (listener.validEmmailInsidePres(email) == true) {
+            if (listener.validEmmailInsidePres(email) == false) {
                 listener.errValidateEmail();
                 Log.i("KEY","model/impl validation");
             }
