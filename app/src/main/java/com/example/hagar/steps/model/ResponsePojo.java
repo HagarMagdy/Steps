@@ -12,32 +12,35 @@ public class ResponsePojo implements Serializable {
 
 
     @SerializedName("status")
-    private String status;
+
+    private Boolean status;
+
     @SerializedName("message")
+
     private String message;
+
     @SerializedName("error")
-    private int error;
+    private String error;
 
+    @SerializedName("id")
+    private int id;
 
-    public ResponsePojo(String status, String message, int error) {
+    public ResponsePojo(Boolean status, String message, String error, int id) {
         this.status = status;
         this.message = message;
         this.error = error;
+        this.id = id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public int getId() {
+        return id;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setError(int error) {
-        this.error = error;
-    }
-
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
@@ -45,7 +48,19 @@ public class ResponsePojo implements Serializable {
         return message;
     }
 
-    public int getError() {
+    public String getError() {
         return error;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

@@ -12,5 +12,8 @@ public interface LoginView {
     void loginError();
 
     boolean validEmmail(String email);
-     boolean checkConnection();
+
+    boolean checkConnection();
+
+    void navigateToHomeScreen(int id);
 }

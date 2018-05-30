@@ -7,7 +7,12 @@
     <string name="forgot">Forgot Password?</string>
     <string name="remember">Remember Me</string>
     <string name="sign_up">Sign Up With Email</string>
-
+    <string name="mServiceName">Name</string>
+    <string name="endDate">End Date</string>
+    <string name="startDate">Start Date</string>
+    <string name="rate">Rate</string>
+    <string name="openHour">Open Hour</string>
+    <string name="closeHour">Close Hour</string>
 
 
 </resources>

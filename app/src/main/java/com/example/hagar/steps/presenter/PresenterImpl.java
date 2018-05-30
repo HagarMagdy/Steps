@@ -1,5 +1,6 @@
 package com.example.hagar.steps.presenter;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -28,17 +29,19 @@ public class PresenterImpl implements LoginPresenter, modelInterface.OnLoginFini
 
     LoginView view;
     modelInterface model;
+    Context context;
 
-    public PresenterImpl(LoginView view, modelInterface model) {
+    public PresenterImpl(LoginView view, modelInterface model, Context context) {
         this.view = view;
         this.model = model;
+        this.context=context;
     }
 
     @Override
     public void validatation(String userName, String password) {
 
         Log.i("KEY","PRES/validatation");
-        model.ProsessLogin(userName, password, this);
+        model.ProsessLogin(userName, password, this,context);
 
     }
 
@@ -62,13 +65,18 @@ public class PresenterImpl implements LoginPresenter, modelInterface.OnLoginFini
     public boolean validEmmailInsidePres(String email)
     {
         Log.i("KEY","PRES / validEmmailInsidePres");
-        view.validEmmail(email);
-        return view.validEmmail(email);
+
+        return  view.validEmmail(email);
     }
 
 
     @Override
     public void onSuccess() {
         view.loginSuccess();
+    }
+
+    @Override
+    public void sendIdToMain(int id) {
+        view.navigateToHomeScreen(id);
     }
 }

@@ -1,12 +1,13 @@
 package com.example.hagar.steps.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        loginPres = new PresenterImpl(MainActivity.this, new modelImpl());
+        loginPres = new PresenterImpl(MainActivity.this, new modelImpl(),this);
     }
 
     @OnClick(R.id.login_btn)
@@ -75,11 +76,9 @@ public class MainActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public  boolean validEmmail(String email) {
-
         boolean isValid = false;
-
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        CharSequence inputStr = email;
+              CharSequence inputStr = email;
 
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(inputStr);
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         }
 
         Log.i("V",""+isValid);
-        return isValid;
+        return true;
     }
 
     @Override
@@ -106,6 +105,15 @@ public class MainActivity extends AppCompatActivity implements LoginView {
             connected = false;
         }
         return connected;
+    }
+
+    @Override
+    public void navigateToHomeScreen(int id) {
+        Intent intent = new Intent(getBaseContext(), Home.class);
+        intent.putExtra("EXTRA_SESSION_ID", id);
+        startActivity(intent);
+
+
     }
 
 
