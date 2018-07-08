@@ -16,10 +16,10 @@ Allowed symbols: Email format only
 
 
 Password :
-Field type: Text
-Mandatory: Yes
-Update: Yes
-Allowed symbols: Letters, spaces, numbers and symbols
+Field type: Text.
+Mandatory: Yes.
+Update: Yes.
+Allowed symbols: Letters, spaces, numbers and symbols.
 
 Login Button :
 Field type: Button
